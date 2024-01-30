@@ -1,0 +1,14 @@
+[
+   {
+      "ParameterKey": "ProjectName",
+      "ParameterValue": "UdagramProject"
+   },
+   {
+      "ParameterKey": "InstanceType",
+      "ParameterValue": "t3.small"
+   },
+   {
+      "ParameterKey": "AsgDesiredCapacity",
+      "ParameterValue": "2"
+   }
+]
