@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: udanalytics
+   labels:
+      service: udanalytics
+spec:
+   replicas: 1
+   selector:
+      matchLabels:
+         service: udanalytics
+   template:
+      metadata:
+         labels:
+            service: udanalytics
+      spec:
+         containers:
+            - name: udanalytics
+              image: 919202260859.dkr.ecr.us-east-1.amazonaws.com/udanalytics:latest
+              imagePullPolicy: Always
+              livenessProbe:
+                 httpGet:
+                    path: /health_check
+                    port: 5153
+                 initialDelaySeconds: 8
+                 timeoutSeconds: 5
+              readinessProbe:
+                 httpGet:
+                    path: "/readiness_check"
+                    port: 5153
+                 initialDelaySeconds: 10
+                 timeoutSeconds: 10
+              envFrom:
+                 - secretRef:
+                      name: db-password
+                 - configMapRef:
+                      name: db-configmap
+              ports:
+                 - containerPort: 5153
+         restartPolicy: Always
